@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from sqlalchemy.exc import IntegrityError, DBAPIError
 
+from auth.views import auth_router
 from exc_handlers.base import (
     value_error_handler,
     related_errors_handler,
@@ -15,7 +16,10 @@ exc_handlers = {
     IntegrityError: related_errors_handler,
     ValueError: value_error_handler,
 }
-routers = {"/bets": bets_router}
+routers = {
+    "/auth": auth_router,
+    "/bets": bets_router,
+}
 
 for exception, handler in exc_handlers.items():
     app.add_exception_handler(exception, handler)

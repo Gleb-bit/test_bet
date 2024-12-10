@@ -4,7 +4,12 @@ from fastapi.responses import JSONResponse
 
 
 async def input_error_handler(request, exc):
-    details = search("invalid input value for(.*)", str(exc)).group(0)
+    input_value = search("invalid input value for(.*)", str(exc))
+    if input_value:
+        details = input_value.group(0)
+    else:
+        details = str(exc)
+
     return JSONResponse(status_code=400, content={"detail": details})
 
 

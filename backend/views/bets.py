@@ -3,9 +3,11 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlmodel.ext.asyncio.session import AsyncSession
 
+from auth.conf import AUTH_MODEL, auth
 from config.database_conf import get_session
 from core.sqlalchemy.crud import Crud
-from models.bets import Bet, BetCreate
+from models.pydantic.bets import BetCreate
+from models.sql.bets import Bet
 
 bets_router = APIRouter()
 bet_crud = Crud(Bet)
@@ -24,5 +26,9 @@ async def retrieve_bet(bet_id: int, session: AsyncSession = Depends(get_session)
 
 
 @bets_router.post("/", response_model=Bet)
-async def create_bet(bet: BetCreate, session: AsyncSession = Depends(get_session)):
+async def post_bet(
+    bet: BetCreate,
+    session: AsyncSession = Depends(get_session),
+    credentials: AUTH_MODEL = Depends(auth.get_request_user),
+):
     return await bet_crud.create(bet, session)

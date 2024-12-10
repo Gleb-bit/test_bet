@@ -22,7 +22,6 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from models.bets import Bet
 target_metadata = SQLModel.metadata
 
 # other values from the config, defined by the needs of env.py,
