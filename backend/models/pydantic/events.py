@@ -2,10 +2,10 @@ from decimal import Decimal
 
 from pydantic import BaseModel, model_validator, Field
 
-from models.sql.bets import EventStatus
+from models.sql.events import EventStatus
 
 
-class BetCreate(BaseModel):
+class EventCreate(BaseModel):
     number: str
     coefficient: Decimal = Field(gt=0, max_digits=5, decimal_places=2)
 

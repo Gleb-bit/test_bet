@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import EmailStr
 from sqlalchemy import UniqueConstraint
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 
 
 class User(SQLModel, table=True):
@@ -19,3 +19,5 @@ class User(SQLModel, table=True):
     last_name: Optional[str] = Field(default=None)
 
     is_active: bool = Field(default=True)
+
+    user_bets: list["UserBet"] = Relationship(back_populates="user")

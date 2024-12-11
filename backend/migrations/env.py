@@ -22,6 +22,10 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
+from models.sql.user_bets import UserBet
+from auth.sql_models import User
+from models.sql.events import Event
+
 target_metadata = SQLModel.metadata
 
 # other values from the config, defined by the needs of env.py,

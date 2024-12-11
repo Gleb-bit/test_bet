@@ -14,8 +14,8 @@ class EventStatus(enum.Enum):
     Second_win = "Second_win"
 
 
-class Bet(SQLModel, table=True):
-    """Модель ставки"""
+class Event(SQLModel, table=True):
+    """Модель события"""
 
     __table_args__ = (UniqueConstraint("number"),)
 
