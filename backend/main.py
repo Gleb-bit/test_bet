@@ -7,6 +7,7 @@ from exc_handlers.base import (
     related_errors_handler,
     input_error_handler,
 )
+from views.bets import bet_router
 from views.events import events_router
 
 app = FastAPI(title="Test btw app")
@@ -18,6 +19,7 @@ exc_handlers = {
 }
 routers = {
     "/auth": auth_router,
+    "": bet_router,
     "/events": events_router,
 }
 

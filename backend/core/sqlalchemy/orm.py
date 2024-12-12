@@ -155,7 +155,7 @@ class Orm:
         model, update_fields: dict, session: AsyncSession, filter_expr=None
     ):
         stmt = update(model)
-        if filter_expr:
+        if filter_expr is not None:
             stmt = stmt.where(filter_expr)
 
         await session.execute(stmt.values(**update_fields))

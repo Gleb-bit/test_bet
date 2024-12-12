@@ -1,8 +1,8 @@
-"""first migration
+"""initial migration
 
-Revision ID: d04865548821
+Revision ID: 534d33ce6db6
 Revises: 
-Create Date: 2024-12-11 21:05:59.120635
+Create Date: 2024-12-12 19:07:38.401492
 
 """
 
@@ -14,7 +14,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "d04865548821"
+revision: str = "534d33ce6db6"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -53,9 +53,15 @@ def upgrade() -> None:
     op.create_table(
         "userbet",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("user_id", sa.Integer(), nullable=True),
-        sa.Column("event_id", sa.Integer(), nullable=True),
+        sa.Column("user_id", sa.Integer(), nullable=False),
+        sa.Column("event_id", sa.Integer(), nullable=False),
+        sa.Column("bet_amount", sa.Float(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=True),
+        sa.Column(
+            "status",
+            sa.Enum("Not_started", "Win", "Lose", name="betstatus"),
+            nullable=True,
+        ),
         sa.ForeignKeyConstraint(
             ["event_id"],
             ["event.id"],
@@ -77,4 +83,5 @@ def downgrade() -> None:
     op.drop_table("user")
     op.drop_table("event")
     op.execute("DROP TYPE IF EXISTS eventstatus")
+
     # ### end Alembic commands ###

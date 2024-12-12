@@ -54,7 +54,7 @@ class Crud:
         :return:
             `Created object.`
         """
-        model_dump = data.model_dump()
+        model_dump = data if isinstance(data, dict) else data.model_dump()
 
         await self.check_unique_fields(self.model, model_dump, session)
 
@@ -108,7 +108,7 @@ class Crud:
         relations=None,
         sort_field: Optional[str] = None,
         sort_order: Optional[str] = "asc",
-        **filters,
+        filters:list = None,
     ):
         """
         Метод для получения списка объектов с фильтрацией и сортировкой.
@@ -124,9 +124,8 @@ class Crud:
 
         query = select(self.model)
 
-        for field, value in filters.items():
-            if value is not None:
-                query = query.filter(getattr(self.model, field) == value)
+        if filters:
+            query = query.filter(*filters)
 
         if sort_field or sort_order:
             sort_field = sort_field or "id"

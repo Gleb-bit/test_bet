@@ -21,3 +21,7 @@ class EventCreate(BaseModel):
             )
 
         return values
+
+
+class EventPatch(BaseModel):
+    status: EventStatus
